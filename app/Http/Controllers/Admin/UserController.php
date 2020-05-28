@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Role;
@@ -7,11 +6,34 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index(){
         return view('admin.users.index')->with('users', User::paginate(10));
+    }
+
+    public function create()
+    {
+        return view('admin.users.create')->with(['roles' => Role::all()]);
+    }
+
+    public function store(Request $request) {
+        request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = User::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => Hash::make(request('password')),
+        ]);
+
+        $user->roles()->sync($request->roles);
+        return redirect()->route('admin.users.index')->with('success', 'De user is toegevoegd!');
     }
 
     public function edit($id)
@@ -28,6 +50,11 @@ class UserController extends Controller
         if (Auth::user()->id == $id) {
             return redirect()->route('admin.users.index')->with('warning', 'You are not allowed to edit yourself');
         }
+
+        User::where('id', $id)->update([
+           'name' => request('name'),
+           'email' => request('email')
+        ]);
 
         $user = User::find($id);
         $user->roles()->sync($request->roles);

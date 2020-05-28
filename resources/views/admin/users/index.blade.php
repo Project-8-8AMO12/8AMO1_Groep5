@@ -5,7 +5,15 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Manage users</div>
+                    <div class="card-header">
+                        Manage users
+                        <div>
+                            <a href="{{ route('admin.users.create') }}">
+                                <button type="submit" class="btn btn-success btn-sm">Create</button>
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="card-body">
                         <table class="table">
                             <thead>
