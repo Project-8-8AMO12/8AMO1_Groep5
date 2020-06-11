@@ -38,6 +38,11 @@
                                 <a href="{{ route('admin.users.index') }}">Manage Users</a>
                             </li>
                         @endhasrole
+                        @hasrole('admin')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.pages.index') }}">Manage Pages</a>
+                            </li>
+                        @endhasrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->
