@@ -20,7 +20,6 @@ class CreatePagesTable extends Migration
             $table->string('page_name')->unique();
             $table->string('page_slug')->unique();
             $table->string('template');
-            $table->string('banner');
             $table->text('body');
             $table->timestamps();
         });
