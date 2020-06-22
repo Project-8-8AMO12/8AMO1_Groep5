@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>tinymce.init({selector:'textarea'});</script>
 
@@ -44,6 +45,11 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.pages.index') }}">Manage Pages</a>
                             </li>
+                        @endhasrole
+                        @hasrole('admin')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.navigation-menu.index') }}">Manage Navigation</a>
+                        </li>
                         @endhasrole
                     </ul>
 
@@ -88,5 +94,7 @@
             @yield('content')
         </main>
     </div>
+
+@yield('scripts')
 </body>
 </html>

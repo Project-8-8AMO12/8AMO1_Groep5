@@ -22,4 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'auth.admin'])->name('admin.')->group(function (){
     Route::resource('/users', 'UserController', ['except' => ['show']]);
     Route::resource('/pages', 'PagesController', ['except' => ['show']]);
+    Route::resource('/navigation-menu', 'NavigatieController', ['except' => ['show']]);
+    Route::resource('/navigation-order', 'NavigatieOrderController', ['except' => ['index', 'edit', 'update', 'show', 'destroy']]);
 });
